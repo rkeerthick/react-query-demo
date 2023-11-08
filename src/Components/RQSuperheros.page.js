@@ -52,4 +52,5 @@ const RQSuperheros = () => {
   return <>{content}</>;
 };
 
+
 export default RQSuperheros;
