@@ -7,11 +7,14 @@ const useSuperHeros = (onSuccess, onError) => {
   };
   return useQuery("super-heros", fetchSuperHeros, {
     onSuccess,
-    onError,
-    select: (data) => {
-      const heroName = data.data.map((hero) => hero.name);
-      return heroName;
-    },
+      onError,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      staleTime: 30000
+    // select: (data) => {
+    //   const heroName = data.data.map((hero) => hero.name);
+    //   return heroName;
+    // },
   });
 };
 
