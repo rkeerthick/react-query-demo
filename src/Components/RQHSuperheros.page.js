@@ -1,9 +1,33 @@
 import React, { useState } from "react";
-import useSuperHeros from "../Hooks/useSuperHeros";
+import {useSuperHeros, useAddSuperHero} from "../Hooks/useSuperHeros";
 
 const RQHSuperheros = () => {
-  const { data, isError, isFetching, error, isLoading } = useSuperHeros();
+  const { data, isError, isFetching, refetch, error, isLoading } = useSuperHeros();
   const [isClicked, setIsClicked] = useState(false);
+  
+  const [name, setName] = useState("");
+  const [alterEgo, setAlterEgo] = useState("");
+
+  const { mutate } = useAddSuperHero();
+
+  
+  const handleName = (name) => {
+    setName(name);
+  };
+  const handleAlterEgo = (alterEgo) => {
+    setAlterEgo(alterEgo);
+  };
+
+  const handleAddHero = () => {
+    console.log({ name, alterEgo });
+    const hero = {name, alterEgo};
+    mutate(hero);
+  };
+
+  const handleFetchUser = () => {
+    setIsClicked(prev => !prev);
+    refetch();
+  }
 
   let content = (
     <>
@@ -18,7 +42,22 @@ const RQHSuperheros = () => {
 
   return (
     <div>
-      <button type="button" onClick={() => setIsClicked((prev) => !prev)}>
+      <div>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => handleName(e.target.value)}
+        />
+        <input
+          type="text"
+          value={alterEgo}
+          onChange={(e) => handleAlterEgo(e.target.value)}
+        />
+        <button type="button" onClick={handleAddHero}>
+          Add Hero
+        </button>
+      </div>
+      <button type="button" onClick={handleFetchUser}>
         View Superheros
       </button>
       {isClicked && <div>{content}</div>}
